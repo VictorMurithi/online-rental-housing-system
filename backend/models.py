@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from app import *
 
-# Initialize SQLAlchemy instance
 db = SQLAlchemy()
 
 # User model representing a user in the system
@@ -17,7 +17,7 @@ class Landlord(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     # Define a relationship with the User model
-    user = db.relationship('User', backref=db.backref('landlord', lazy=True))
+    user = db.relationship('User', backref=db.backref('landlord', uselist=False, lazy=True))
 
 # Tenant model representing a tenant in the system
 class Tenant(db.Model):
@@ -25,7 +25,7 @@ class Tenant(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     # Define a relationship with the User model
-    user = db.relationship('User', backref=db.backref('tenant', lazy=True))
+    user = db.relationship('User', backref=db.backref('tenant', uselist=False, lazy=True))
 
 # Apartment model representing a rental property
 class Apartment(db.Model):
@@ -34,13 +34,14 @@ class Apartment(db.Model):
     images = db.Column(db.String(255), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     county = db.Column(db.String(255), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    bedrooms = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, default=0)
+    bedrooms = db.Column(db.Integer, default=0, nullable=True)
     description = db.Column(db.Text)
     is_available = db.Column(db.Boolean, default=True)
 
     # Define a relationship with the Landlord model
     landlord = db.relationship('Landlord', backref=db.backref('apartments', lazy=True))
+
 
 # Booking model representing a booking made by a tenant for an apartment
 class Booking(db.Model):
@@ -52,4 +53,3 @@ class Booking(db.Model):
     # Define relationships with the Tenant and Apartment models
     tenant = db.relationship('Tenant', backref=db.backref('bookings', lazy=True))
     apartment = db.relationship('Apartment', backref=db.backref('bookings', lazy=True))
-
