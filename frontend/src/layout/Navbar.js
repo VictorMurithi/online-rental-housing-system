@@ -23,7 +23,7 @@ const Navbar = () => {
         <button className="contact-button">Contact us</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
