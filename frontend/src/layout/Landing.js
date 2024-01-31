@@ -1,5 +1,7 @@
 import React from "react";
 import "../App.css";
+import listingimage from "../images/istockphoto-643897728-2048x2048.jpg"
+import screeningimage from "../images/pexels-photo-5668858.webp"
 
 function Landing() {
   return (
@@ -27,7 +29,7 @@ function Landing() {
           <div className="listingcontainer">
             <div className="imgcontainer">
               <img
-                src="./Images/istockphoto-643897728-2048x2048.jpg"
+                src={listingimage}
                 alt="Loading image"
               />
             </div>
@@ -56,7 +58,7 @@ function Landing() {
             </div>
             <div className="imgcontainer">
               <img
-                src="./Images/pexels-photo-5668858.webp"
+                src={screeningimage}
                 alt="Loading image"
               />
             </div>
