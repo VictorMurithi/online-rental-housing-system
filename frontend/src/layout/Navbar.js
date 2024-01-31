@@ -14,9 +14,6 @@ const Navbar = () => {
         <Link to="/" className="nav-link">
           Home
         </Link>
-        <Link to="/other-services" className="nav-link">
-          Other Services
-        </Link>
         <Link to="/request-property" className="nav-link">
           Request a Property
         </Link>
