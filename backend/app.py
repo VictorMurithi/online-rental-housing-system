@@ -81,5 +81,9 @@ def login():
     return jsonify(response_data), 200
 
 
+@app.route("/counties", methods=["GET"])
+def get_counties():
+    pass
+
 if __name__ == "__main__":
     app.run(debug=True)

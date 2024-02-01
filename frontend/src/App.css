@@ -7,6 +7,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 20px;
   background-color: #58e9e267; /* Set your preferred background color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
@@ -314,4 +315,36 @@ button:hover{
 
 .signup-link {
   color: #007bff; /* Optional: Customize link color */
+}
+/* FetchCounties.css */
+.counties-container {
+  text-align: center;
+  margin: 20px;
+  height: 70vh;
+}
+
+.counties-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.counties-list li {
+  margin: 10px;
+}
+
+.counties-list button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.counties-list button:hover {
+  background-color: #2980b9;
 }
