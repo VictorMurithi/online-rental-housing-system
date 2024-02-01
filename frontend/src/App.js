@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import CountiesComponent from './components/CountiesComponent';
+import CountiesComponent from './pages/Counties';
 
 function App() {
   return (
