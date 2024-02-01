@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import CountiesComponent from './pages/Counties';
+import Apartments from './components/Apartments';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/counties" element={<CountiesComponent/>} />
+        <Route path="/counties/:county/apartments" element={<Apartments/>} />
       </Routes>
     </Router>
   );

@@ -81,8 +81,9 @@ def login():
     return jsonify(response_data), 200
 
 
-@app.route("/counties", methods=["GET"])
-def get_counties():
+@app.route("/counties/:county/apartments", methods=["GET"])
+def get_counties_apartments(county):
+    apartments_data = get_counties_apartments(county)
     pass
 
 if __name__ == "__main__":
