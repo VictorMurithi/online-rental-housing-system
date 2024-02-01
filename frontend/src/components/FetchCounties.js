@@ -18,7 +18,7 @@ export default function FetchCounties() {
 
   const handleCountyClick = (county) => {
     setSelectedCounty(county);
-    navigate(`/counties/${county}`);
+    navigate(`/counties/${county}/apartments`);
   };
 
   return (
