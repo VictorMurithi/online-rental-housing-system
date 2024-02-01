@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from models import db, User
+from models import db, User, Landlord, Tenant, Apartment, Booking
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///rental_app.db"
@@ -81,10 +81,28 @@ def login():
     return jsonify(response_data), 200
 
 
-@app.route("/counties/:county/apartments", methods=["GET"])
+@app.route("/counties/<string:county>/apartments", methods=["GET"])
 def get_counties_apartments(county):
-    apartments_data = get_counties_apartments(county)
-    pass
+    apartments = Apartment.query.filter_by(county=county).all()
+
+    if not apartments:
+        return jsonify({"error": "No apartments found for the specified county"}), 404
+    else:
+        apartments_data = [
+            {
+                "id": apartment.id,
+                "landlord_id": apartment.landlord_id,
+                "images": apartment.images,
+                "address": apartment.address,
+                "county": apartment.county,
+                "price": apartment.price,
+                "bedrooms": apartment.bedrooms,
+                "description": apartment.description,
+                "is_available": apartment.is_available
+            }
+            for apartment in apartments
+        ]
+        return jsonify(apartments_data), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
