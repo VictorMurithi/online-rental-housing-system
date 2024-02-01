@@ -36,13 +36,13 @@ const Apartments = () => {
     <div>
       <Navbar />
       <h1>Apartments in {county}</h1>
-      <div>
+      <div className="apartments-container">
         {apartments.length === 0 ? (
           <p>No apartments found for the specified county.</p>
         ) : (
-          <ul>
+          <div className="apartments-list">
             {apartments.map(apartment => (
-              <div key={apartment.id}>
+              <div key={apartment.id} className="apartment-card">
                 <h3>{apartment.address}</h3>
                 <p>Bedrooms: {apartment.bedrooms}</p>
                 <p>County: {apartment.county}</p>
@@ -52,7 +52,7 @@ const Apartments = () => {
                 <p>Available: {apartment.is_available ? "Yes" : "No"}</p>
               </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
       <Footer />
