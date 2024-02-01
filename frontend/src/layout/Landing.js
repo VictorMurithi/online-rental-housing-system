@@ -2,8 +2,15 @@ import React from "react";
 import "../App.css";
 import listingimage from "../images/istockphoto-643897728-2048x2048.jpg"
 import screeningimage from "../images/pexels-photo-5668858.webp"
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
+  const navigate = useNavigate();
+
+  const handleStartSearch = () => {
+    navigate("/counties");
+  };
+
   return (
     <div className="container">
       <div id="renters" className="section">
@@ -17,7 +24,7 @@ function Landing() {
             to you, such as price range, location, and more. Parents can also
             search for rentals that fall within a particular school.
           </p>
-          <button>start my search</button>
+          <button onClick={handleStartSearch}>start my search</button>
         </div>
       </div>
 
