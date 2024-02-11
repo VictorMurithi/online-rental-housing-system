@@ -1,19 +1,21 @@
-// AddApartmentForm.js
 import React, { useState } from "react";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import "../App.css";
 
 export default function AddApartmentForm() {
-    const [description, setDescription] = useState("");
-    const [county, setCounty] = useState("");
-    const [price, setPrice] = useState("");
-    const [images, setImages] = useState([]);
+    const [apartment, setApartment] = useState({
+        description: "",
+        county: "",
+        price: "",
+        images: [],
+        is_available: true
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Here you can handle form submission, e.g., send data to backend
-        console.log("Form submitted:", { description, county, price, images });
+        console.log("Form submitted:", apartment);
     };
 
     return (
@@ -28,8 +30,18 @@ export default function AddApartmentForm() {
                             className="form-control"
                             id="description"
                             rows="4"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={apartment.description}
+                            onChange={(e) => setApartment({ ...apartment, description: e.target.value })}
+                        ></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="bedrooms">Bedrooms:</label>
+                        <textarea
+                            type="number"
+                            className="form-control"
+                            id="bedrooms"
+                            value={apartment.bedrooms}
+                            onChange={(e) => setApartment({ ...apartment, bedrooms: e.target.value })}
                         ></textarea>
                     </div>
                     <div className="form-group">
@@ -38,8 +50,8 @@ export default function AddApartmentForm() {
                             type="text"
                             className="form-control"
                             id="county"
-                            value={county}
-                            onChange={(e) => setCounty(e.target.value)}
+                            value={apartment.county}
+                            onChange={(e) => setApartment({ ...apartment, county: e.target.value })}
                         />
                     </div>
                     <div className="form-group">
@@ -48,8 +60,8 @@ export default function AddApartmentForm() {
                             type="text"
                             className="form-control"
                             id="price"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            value={apartment.price}
+                            onChange={(e) => setApartment({ ...apartment, price: e.target.value })}
                         />
                     </div>
                     <div className="form-group">
@@ -59,8 +71,20 @@ export default function AddApartmentForm() {
                             className="form-control-file"
                             id="images"
                             multiple
-                            onChange={(e) => setImages(e.target.files)}
+                            onChange={(e) => setApartment({ ...apartment, images: e.target.files })}
                         />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="is_available">Available:</label>
+                        <select
+                            className="form-control"
+                            id="is_available"
+                            value={apartment.is_available}
+                            onChange={(e) => setApartment({ ...apartment, is_available: e.target.value })}
+                        >
+                            <option value={true}>Yes</option>
+                            <option value={false}>No</option>
+                        </select>
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">
                         Submit
