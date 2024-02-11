@@ -103,6 +103,32 @@ def get_counties_apartments(county):
             for apartment in apartments
         ]
         return jsonify(apartments_data), 200
+    
+@app.route("/add-apartment", methods=["POST"])
+def add_apartment():
+    data = request.get_json()
+    images = data.get("images")
+    county = data.get("county")
+    price = data.get("price")
+    bedrooms = data.get("bedrooms")
+    description = data.get("description")
+    is_available = data.get("is_available")
+
+    if not images or not county or not price or not bedrooms or not description or not is_available:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    apartment = Apartment(
+        images=images,
+        county=county,
+        price=price,
+        bedrooms=bedrooms,
+        description=description,
+        is_available=is_available
+    )
+    db.session.add(apartment)
+    db.session.commit()
+
+    return jsonify({"message": "Apartment added successfully"}), 201
 
 if __name__ == "__main__":
     app.run(debug=True)

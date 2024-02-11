@@ -8,14 +8,46 @@ export default function AddApartmentForm() {
         description: "",
         county: "",
         price: "",
+        bedrooms: "",
         images: [],
         is_available: true
     });
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Here you can handle form submission, e.g., send data to backend
-        console.log("Form submitted:", apartment);
+
+        fetch("/add-apartment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+                {
+                    description: apartment.description,
+                    county: apartment.county,
+                    price: apartment.price,
+                    images: apartment.images,
+                    bedrooms: apartment.bedrooms,
+                    is_available: apartment.is_available
+                }
+            ),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setApartment({
+                    description: "",
+                    county: "",
+                    price: "",
+                    bedrooms: "",
+                    images: [],
+                    is_available: true
+                });
+
+                console.log("Apartment added:", data);
+            })
+            .catch((error) => {
+                console.error("Error adding apartment:", error);
+            });
     };
 
     return (
