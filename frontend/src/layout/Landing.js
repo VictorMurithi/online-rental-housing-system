@@ -11,6 +11,10 @@ function Landing() {
     navigate("/counties");
   };
 
+  const handleAddListing = () => {
+    navigate("/add-apartment");
+  };
+
   return (
     <div className="container">
       <div id="renters" className="section">
@@ -46,7 +50,7 @@ function Landing() {
                 Post your rental property in minutes to reach millions of
                 potential renters.
               </p>
-              <button>Add Listing</button>
+              <button onClick={handleAddListing}>Add Listing</button>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import CountiesComponent from './pages/Counties';
 import Apartments from './components/Apartments';
+import AddApartmentForm from './components/AddApartmentForm';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/counties" element={<CountiesComponent/>} />
         <Route path="/counties/:county/apartments" element={<Apartments/>} />
+        <Route path ="/add-apartment" element={<AddApartmentForm/>} />
       </Routes>
     </Router>
   );
