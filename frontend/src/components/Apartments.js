@@ -50,6 +50,7 @@ const Apartments = () => {
                 <img src={apartment.images} alt={`Apartment ${apartment.id}`} />
                 <p>Price: ${apartment.price}</p>
                 <p>Available: {apartment.is_available ? "Yes" : "No"}</p>
+                <button>Book Now</button>
               </div>
             ))}
           </div>
