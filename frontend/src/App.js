@@ -7,6 +7,7 @@ import Signup from './components/Signup';
 import CountiesComponent from './pages/Counties';
 import Apartments from './components/Apartments';
 import AddApartmentForm from './components/AddApartmentForm';
+import Screening from './components/Screening';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/counties" element={<CountiesComponent/>} />
         <Route path="/counties/:county/apartments" element={<Apartments/>} />
         <Route path ="/add-apartment" element={<AddApartmentForm/>} />
+        <Route path="/screen-tenants" element={<Screening/>} />
       </Routes>
     </Router>
   );

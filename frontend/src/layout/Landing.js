@@ -15,6 +15,10 @@ function Landing() {
     navigate("/add-apartment");
   };
 
+  const handleScreening = () => {
+    navigate("/screen-tenants");
+  };
+
   return (
     <div className="container">
       <div id="renters" className="section">
@@ -65,7 +69,7 @@ function Landing() {
                 times and empowering renters to receive a decision in hours
                 instead of days.
               </p>
-              <button>screen tenants</button>
+              <button onClick={handleScreening}>screen tenants</button>
             </div>
             <div className="imgcontainer">
               <img
