@@ -14,6 +14,15 @@ export default function AddApartmentForm() {
         is_available: true
     });
 
+    const handeClick = (event) => {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'success',
+            title: 'Form Submitted',
+            text: 'Thank you for your submission!',
+        })
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -25,6 +34,7 @@ export default function AddApartmentForm() {
             body: JSON.stringify(
                 {
                     description: apartment.description,
+                    address: apartment.address,
                     county: apartment.county,
                     price: apartment.price,
                     images: apartment.images,
@@ -37,17 +47,14 @@ export default function AddApartmentForm() {
             .then((data) => {
                 setApartment({
                     description: "",
+                    address: "",
                     county: "",
                     price: "",
                     bedrooms: "",
                     images: [],
                     is_available: true
                 });
-                Swal.fire({
-                    icon: "success",
-                    title: "Apartment Added!",
-                    text: "Apartment added successfully!",
-                })
+
                 console.log("Apartment added:", data);
             })
             .catch((error) => {
@@ -70,6 +77,16 @@ export default function AddApartmentForm() {
                             value={apartment.description}
                             onChange={(e) => setApartment({ ...apartment, description: e.target.value })}
                         ></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="address">Address:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="address"
+                            value={apartment.address}
+                            onChange={(e) => setApartment({ ...apartment, address: e.target.value })}
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="bedrooms">Bedrooms:</label>
@@ -123,7 +140,7 @@ export default function AddApartmentForm() {
                             <option value={false}>No</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block">
+                    <button type="submit" className="btn btn-primary btn-block" onClick={handeClick}>
                         Submit
                     </button>
                 </form>

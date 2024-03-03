@@ -108,6 +108,7 @@ def get_counties_apartments(county):
 def add_apartment():
     data = request.get_json()
     images = data.get("images")
+    address = data.get("address")
     county = data.get("county")
     price = data.get("price")
     bedrooms = data.get("bedrooms")
@@ -119,6 +120,7 @@ def add_apartment():
 
     apartment = Apartment(
         images=images,
+        address=address,
         county=county,
         price=price,
         bedrooms=bedrooms,
