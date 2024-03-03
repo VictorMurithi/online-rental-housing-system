@@ -3,6 +3,7 @@ import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
+import Swal from 'sweetalert2'; // Import SweetAlerts
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -22,42 +23,48 @@ const Signup = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Use async/await for better readability
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/signup", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: username,
-            email: email,
-            password: password
-          })
-        });
+    try {
+      const response = await fetch("/signup", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password
+        })
+      });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-
-        if (data.error) {
-          alert(data.error);
-        } else {
-          alert(data.message);
-          navigate('/dashboard');
-        }
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
 
-    fetchData();
+      const data = await response.json();
+
+      if (data.error) {
+        // Replace basic alert with SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Sign Up Failed',
+          text: data.error,
+        });
+      } else {
+        // Replace basic alert with SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Account Created',
+          text: 'Your account has been created successfully!',
+        }).then(() => {
+          navigate('/dashboard');
+        });
+      }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
 
     console.log('Signup form submitted:', username, email, password);
   };

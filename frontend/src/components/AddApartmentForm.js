@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import "../App.css";
+import Swal from "sweetalert2";
 
 export default function AddApartmentForm() {
     const [apartment, setApartment] = useState({
@@ -42,7 +43,11 @@ export default function AddApartmentForm() {
                     images: [],
                     is_available: true
                 });
-                alert("Apartment added successfully!");
+                Swal.fire({
+                    icon: "success",
+                    title: "Apartment Added!",
+                    text: "Apartment added successfully!",
+                })
                 console.log("Apartment added:", data);
             })
             .catch((error) => {

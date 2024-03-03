@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
+import Swal from "sweetalert2";
 
 export default function Screening() {
     const [formData, setFormData] = useState({
@@ -38,7 +39,11 @@ export default function Screening() {
     const handleClick = (e) => {
         e.preventDefault();
         
-        alert("Form submitted successfully!");
+        Swal.fire({
+            icon: 'success',
+            title: 'Form Submitted',
+            text: 'Thank you for your submission!',
+        })
         console.log(formData);
     };
 

@@ -74,22 +74,54 @@ def generate_fake_tenants(users):
     return tenants
 
 # Function to generate fake apartments
-def generate_fake_apartments(landlords):
+def generate_fake_apartments(landlords, counties):
     apartments = []
-    for landlord in landlords:
-        image_index = landlords.index(landlord) % len(apartment_images)
+    num_apartments_per_county = len(landlords) // len(counties)
+    
+    for county in counties:
+        for _ in range(num_apartments_per_county):
+            landlord = landlords.pop(0)
+            image_index = len(apartments) % len(apartment_images)
+            image_url = apartment_images[image_index]
+            apartment = Apartment(
+                landlord=landlord,
+                images=image_url,  # Use a single image URL
+                address=fake.street_address(),
+                description=fake.text(),
+                county=county,
+                price=fake.random_int(min=500, max=5000),
+                bedrooms=fake.random_int(min=1, max=5),
+                is_available=fake.boolean(),
+            )
+            apartments.append(apartment)
+
+    # Add remaining apartments to counties
+    remaining_apartments = len(landlords) // len(counties)
+    for i in range(remaining_apartments):
+        landlord = landlords.pop(0)
+        image_index = apartments.index(landlord) % len(apartment_images)
         image_url = apartment_images[image_index]
         apartment = Apartment(
             landlord=landlord,
             images=image_url,  # Use a single image URL
             address=fake.street_address(),
             description=fake.text(),
-            county=fake.random_element(counties),
+            county=counties[i % len(counties)],
             price=fake.random_int(min=500, max=5000),
             bedrooms=fake.random_int(min=1, max=5),
             is_available=fake.boolean(),
         )
         apartments.append(apartment)
+    
+    counties = [
+    "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa", "Homa Bay",
+    "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", "Kisumu",
+    "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", "Marsabit", "Meru",
+    "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi", "Narok", "Nyamira", "Nyandarua",
+    "Nyeri", "Samburu", "Siaya", "Taita-Taveta", "Tana River", "Tharaka-Nithi", "Trans Nzoia",
+    "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
+]
+
     return apartments
 
 
@@ -111,9 +143,8 @@ def clear_database():
         db.create_all()
 
 # Number of fake users, landlords, tenants, apartments, and bookings
-num_users = 10
+num_users = 40
 min_entries_per_user = 4
-
 num_users = max(min_entries_per_user, num_users)
 num_landlords = num_users
 num_tenants = num_users
@@ -132,7 +163,7 @@ fake_landlords = generate_fake_landlords(fake_users)
 print("Generating fake tenants...")
 fake_tenants = generate_fake_tenants(fake_users)
 print("Generating fake apartments...")
-fake_apartments = generate_fake_apartments(fake_landlords)
+fake_apartments = generate_fake_apartments(fake_landlords,counties)
 print("Generating fake bookings...")
 fake_bookings = generate_fake_bookings(fake_tenants, fake_apartments)
 

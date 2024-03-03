@@ -130,5 +130,29 @@ def add_apartment():
 
     return jsonify({"message": "Apartment added successfully"}), 201
 
+@app.route("/book-apartment", methods=["POST"])
+def book_apartment():
+    data = request.get_json()
+    tenant_id = data.get("tenant_id")
+    apartment_id = data.get("apartment_id")
+    start_date = data.get("start_date")
+
+    if not tenant_id or not apartment_id or not start_date:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    tenant = Tenant.query.get(tenant_id)
+    if not tenant:
+        return jsonify({"error": "Tenant not found"}), 404
+
+    apartment = Apartment.query.get(apartment_id)
+    if not apartment:
+        return jsonify({"error": "Apartment not found"}), 404
+
+    booking = Booking(tenant=tenant, apartment=apartment, start_date=start_date)
+    db.session.add(booking)
+    db.session.commit()
+
+    return jsonify({"message": "Booking successful"}), 201
+
 if __name__ == "__main__":
     app.run(debug=True)

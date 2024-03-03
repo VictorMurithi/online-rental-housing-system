@@ -1,27 +1,21 @@
-// Apartments.js
 import React, { useState, useEffect } from "react";
-import { useParams ,} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
+import Swal from 'sweetalert2'; // Import SweetAlerts
 
 const Apartments = () => {
   const [apartments, setApartments] = useState([]);
   const { county } = useParams();
 
   useEffect(() => {
-    // Ensure that 'county' is defined before making the fetch request
     if (county) {
       fetch(`/counties/${county}/apartments`)
         .then(response => response.json())
         .then(data => {
-          // Check if the array is not empty and extract the first element
-          const firstApartment = data.length > 0 ? data[0] : null;
-  
-          if (firstApartment) {
-            console.log("apartment:", firstApartment);
-            setApartments([firstApartment]);
+          if (data.length > 0) {
+            setApartments(data);
           } else {
-            console.log("No apartments found for the specified county.");
             setApartments([]);
           }
         })
@@ -30,7 +24,31 @@ const Apartments = () => {
         });
     }
   }, [county]);
-  
+
+  const handleBookNow = (apartmentId, apartmentAddress) => {
+    // Display SweetAlert confirmation dialog
+    Swal.fire({
+      title: 'Confirm Booking',
+      text: `Do you want to book the apartment at ${apartmentAddress}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, book it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Here you can implement the booking logic
+        console.log(`Booking apartment ${apartmentId}`);
+        // Show success message with SweetAlert
+        Swal.fire({
+          title: 'Booking Confirmed',
+          text: 'Your booking has been confirmed!',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+        });
+      }
+    });
+  };
 
   return (
     <div>
@@ -50,7 +68,7 @@ const Apartments = () => {
                 <img src={apartment.images} alt={`Apartment ${apartment.id}`} />
                 <p>Price: ${apartment.price}</p>
                 <p>Available: {apartment.is_available ? "Yes" : "No"}</p>
-                <button>Book Now</button>
+                <button onClick={() => handleBookNow(apartment.id, apartment.address)}>Book Now</button>
               </div>
             ))}
           </div>
@@ -59,7 +77,6 @@ const Apartments = () => {
       <Footer />
     </div>
   );
-  
 };
 
 export default Apartments;

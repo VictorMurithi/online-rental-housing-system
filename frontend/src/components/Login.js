@@ -3,6 +3,7 @@ import '../App.css';
 import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Import SweetAlerts
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -45,10 +46,21 @@ const Login = () => {
       })
       .then(data => {
         if (data.error) {
-          alert(data.error);
+          // Replace basic alert with SweetAlert
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: data.error,
+          });
         } else {
-          alert(data.message);
-          navigate('/dashboard');
+          // Replace basic alert with SweetAlert
+          Swal.fire({
+            icon: 'success',
+            title: 'Login Successful',
+            text: 'Welcome back!',
+          }).then(() => {
+            navigate('/dashboard');
+          });
         }
       })
       .catch(error => {
