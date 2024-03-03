@@ -11,8 +11,7 @@ export default function Footer() {
       </div>
       <div>
         <ul>
-          <li><Link to="/list-your-rental" className="footer-link">List your rental</Link></li>
-          <li><Link to="/accessibility" className="footer-link">Accessibility</Link></li>
+          <li><Link to="/add-apartment" className="footer-link">List your rental</Link></li>
           <li><Link to="/about-us" className="footer-link">About us</Link></li>
           <li><Link to="/contact-us" className="footer-link">Contact us</Link></li>
         </ul>

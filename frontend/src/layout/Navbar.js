@@ -14,10 +14,7 @@ const Navbar = () => {
         <Link to="/" className="nav-link">
           Home
         </Link>
-        <Link to="/request-property" className="nav-link">
-          Request a Property
-        </Link>
-        <Link to="/list-property" className="nav-link">
+        <Link to="/add-apartment" className="nav-link">
           List a Property
         </Link>
         <button className="contact-button">Contact us</button>
