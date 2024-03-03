@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
-import Swal from 'sweetalert2'; // Import SweetAlerts
+import Swal from 'sweetalert2';
+import "../Css/Apartment.css";
 
 const Apartments = () => {
   const [apartments, setApartments] = useState([]);
