@@ -34,6 +34,13 @@ export default function Screening() {
             [name]: type === "checkbox" ? checked : value
         }));
     };
+    
+    const handleClick = (e) => {
+        e.preventDefault();
+        
+        alert("Form submitted successfully!");
+        console.log(formData);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -107,7 +114,7 @@ export default function Screening() {
                         <input type="text" id="previousRentalHistory" name="previousRentalHistory" value={ formData.previousRentalHistory} onChange={handleChange} />
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <button type="submit" onClick={handleClick}>Submit</button>
                 </form>
             </div>
             <Footer />

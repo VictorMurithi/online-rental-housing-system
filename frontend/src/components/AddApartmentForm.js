@@ -42,7 +42,7 @@ export default function AddApartmentForm() {
                     images: [],
                     is_available: true
                 });
-
+                alert("Apartment added successfully!");
                 console.log("Apartment added:", data);
             })
             .catch((error) => {
