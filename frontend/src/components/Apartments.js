@@ -9,13 +9,16 @@ const Apartments = () => {
   const { county } = useParams();
 
   useEffect(() => {
+    // Ensure that 'county' is defined before making the fetch request
     if (county) {
       fetch(`/counties/${county}/apartments`)
         .then(response => response.json())
         .then(data => {
           if (data.length > 0) {
+            console.log("apartments:", data);
             setApartments(data);
           } else {
+            console.log("No apartments found for the specified county.");
             setApartments([]);
           }
         })
@@ -24,6 +27,8 @@ const Apartments = () => {
         });
     }
   }, [county]);
+
+  
 
   const handleBookNow = (apartmentId, apartmentAddress) => {
     // Display SweetAlert confirmation dialog

@@ -64,6 +64,12 @@ const Login = () => {
         }
       })
       .catch(error => {
+        // Replace basic alert with SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: 'There was an error logging in. Please try again.',
+        });
         console.error('There was a problem with the fetch operation:', error);
         // Handle error appropriately, e.g., show an error message to the user
       });

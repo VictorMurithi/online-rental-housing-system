@@ -1,6 +1,7 @@
 from faker import Faker
 from app import db, app
 from models import User, Landlord, Tenant, Apartment, Booking
+import random
 
 fake = Faker()
 
@@ -74,18 +75,19 @@ def generate_fake_tenants(users):
     return tenants
 
 # Function to generate fake apartments
-def generate_fake_apartments(landlords, counties):
+def generate_fake_apartments(landlords):
     apartments = []
-    num_apartments_per_county = len(landlords) // len(counties)
-    
+    total_apartments = len(landlords) * 20  # Set the total number of apartments to be double the number of landlords
+    apartments_per_county = total_apartments // len(counties)
+
     for county in counties:
-        for _ in range(num_apartments_per_county):
-            landlord = landlords.pop(0)
-            image_index = len(apartments) % len(apartment_images)
-            image_url = apartment_images[image_index]
+        county_landlords = random.sample(landlords, apartments_per_county)  # Randomly select landlords for this county
+        for _ in range(apartments_per_county):
+            landlord = county_landlords.pop(0)  # Pop the first landlord from the list
+            image_url = random.choice(apartment_images)  # Randomly select an image
             apartment = Apartment(
                 landlord=landlord,
-                images=image_url,  # Use a single image URL
+                images=image_url,
                 address=fake.street_address(),
                 description=fake.text(),
                 county=county,
@@ -95,35 +97,7 @@ def generate_fake_apartments(landlords, counties):
             )
             apartments.append(apartment)
 
-    # Add remaining apartments to counties
-    remaining_apartments = len(landlords) // len(counties)
-    for i in range(remaining_apartments):
-        landlord = landlords.pop(0)
-        image_index = apartments.index(landlord) % len(apartment_images)
-        image_url = apartment_images[image_index]
-        apartment = Apartment(
-            landlord=landlord,
-            images=image_url,  # Use a single image URL
-            address=fake.street_address(),
-            description=fake.text(),
-            county=counties[i % len(counties)],
-            price=fake.random_int(min=500, max=5000),
-            bedrooms=fake.random_int(min=1, max=5),
-            is_available=fake.boolean(),
-        )
-        apartments.append(apartment)
-    
-    counties = [
-    "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa", "Homa Bay",
-    "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", "Kisumu",
-    "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", "Marsabit", "Meru",
-    "Migori", "Mombasa", "Murang'a", "Nairobi", "Nakuru", "Nandi", "Narok", "Nyamira", "Nyandarua",
-    "Nyeri", "Samburu", "Siaya", "Taita-Taveta", "Tana River", "Tharaka-Nithi", "Trans Nzoia",
-    "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
-]
-
     return apartments
-
 
 # Function to generate fake bookings
 def generate_fake_bookings(tenants, apartments):
@@ -143,12 +117,12 @@ def clear_database():
         db.create_all()
 
 # Number of fake users, landlords, tenants, apartments, and bookings
-num_users = 40
+num_users = 50
 min_entries_per_user = 4
 num_users = max(min_entries_per_user, num_users)
 num_landlords = num_users
 num_tenants = num_users
-num_apartments = num_landlords
+num_apartments = num_landlords * 2  # Double the number of landlords
 num_bookings = min(num_tenants, num_apartments)
 
 # Clear the database
@@ -163,21 +137,18 @@ fake_landlords = generate_fake_landlords(fake_users)
 print("Generating fake tenants...")
 fake_tenants = generate_fake_tenants(fake_users)
 print("Generating fake apartments...")
-fake_apartments = generate_fake_apartments(fake_landlords,counties)
+fake_apartments = generate_fake_apartments(fake_landlords)
 print("Generating fake bookings...")
 fake_bookings = generate_fake_bookings(fake_tenants, fake_apartments)
-
 
 # Add fake data to the database
 with app.app_context():
     db.create_all()
-
     db.session.add_all(fake_users)
     db.session.add_all(fake_landlords)
     db.session.add_all(fake_tenants)
     db.session.add_all(fake_apartments)
     db.session.add_all(fake_bookings)
-
     db.session.commit()
 
 print("Fake data has been successfully added to the database.")
